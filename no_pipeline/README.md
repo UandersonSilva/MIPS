@@ -13,7 +13,7 @@ Other integer instructions (shift, multiply, divide) and floating point instruct
 
 ![MIPS R-type instr](alib/MIPS_R_type_instr.svg)
 
-The opcode field [31:26] is 0, rs and rt fields are source registers, and rd the destination one. The shamt field is used for shift operations (not available in this version), and the funct field defines the ALU function to be performed (add -> 6'b100000, sub -> 6'b100010, AND -> 6'b100100, OR -> 6'b100101 and slt(store if less than) -> 6'b101010).
+The opcode field [31:26] is 0, rs and rt fields are source registers, and rd the destination one. The shamt field is used for shift operations (not available in this version), and the funct field defines the ALU function to be performed (add -> 6'b100000, sub -> 6'b100010, AND -> 6'b100100, OR -> 6'b100101 and slt(set on less than) -> 6'b101010).
 
 - Memory-reference instructions
 
