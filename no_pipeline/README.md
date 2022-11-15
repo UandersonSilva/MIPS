@@ -1,6 +1,10 @@
 # No pipeline
 In this MIPS structure, all instructions take the same number of clock cycles (monocycle processor) to be executed (here, 1-cicle). To make it possible, it is necessary to use a memory for instructions and another for data.
 
+## Structure
+
+![MIPS np structure](alib/MIPS_np_structure.svg)
+
 ## Instructions
 The following instructions will be available:
  - The memory-reference instructions load word (lw) and store word (sw);
@@ -21,12 +25,14 @@ The opcode field [31:26] is 0, rs and rt fields are source registers, and rd the
 
 The opcode field [31:26] is 35 (6'b100011) for load and 43 (6'b101011) for store operations. The rs field indicates the register that contains the value to be added to the address field one to obtain the memory address. For load operations, register rt stores the value received from memory at the calculated address (rt <= mem[rs + address]). For store operations, register rt contais the value to be stored in memory at the calculated address (rt => mem[rs + address]).    
 
-- Branch instructions
+- Branch instruction
 
 ![MIPS branch instr](alib/MIPS_branch_instr.svg)
 
 The opcode field [31:26] is 4 (6'b000100) for branch equal (beq). The registers rs and rt as sources for the comparison operation. The address field value is extended, shifted left by 2 and added to the next PC value (PC + 4 + address) to obtain the branch target address.
 
-## Structure
+- Jump instruction
 
-![MIPS np structure](alib/MIPS_np_structure.svg)
+![MIPS j instr](alib/MIPS_j_instr.svg)
+
+The opcode field [31:26] is 2 (6'b000010) for jump (j). The jump target address is composed by the 4 most significant bits of current PC + 4 (next instruction address) concatenated with the 26-bit address field and adding 00 in 2 least significant bits remaining. 
