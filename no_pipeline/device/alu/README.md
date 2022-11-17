@@ -13,6 +13,9 @@ others   | others      |   OUT = Z (High impedance); Zero is updated
 
 ## Runtime outputs (test/alu_test.sv)
 
+Running on edaplayground platform => 
+[mips_alu](https://www.edaplayground.com/x/kRVN)
+
 #KERNEL: [1] a_in: 0x0040 _and b_in: 0x00ff => alu_out: 0x0040 zero_out: 0  
 #KERNEL: [2] a_in: 0x0040 _or b_in: 0x00ff => alu_out: 0x00ff zero_out: 0  
 #KERNEL: [3] a_in: 64 _add b_in: 255 => alu_out: 319 zero_out: 0  
