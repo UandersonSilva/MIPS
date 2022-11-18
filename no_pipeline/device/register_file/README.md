@@ -2,7 +2,7 @@
 
 The register file has 32 registers addressed by 5-bit buses (2 buses for reading and 1 for writing). The value of register 0 must always be 0. Therefore, this register cannot be written.
 
-## Runtime output
+## Runtime output (test/rf_test.sv)
 
 #[3] read_register_0: x1 read_data_0: 0xxxxx  
 #read_register_1: x30 read_data_1: 0xxxxx  
