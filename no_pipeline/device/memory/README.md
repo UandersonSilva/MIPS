@@ -9,7 +9,7 @@ word  |    0x    |   mem[write_address_in[address_width-1:2]] <= write_data_in /
 half  |    10    |   mem[write_address_in[address_width-1:1]] <= write_data_in[15:0] // 2 bytes at once
 byte  |    11    |   mem[write_address_in[address_width-1:0]] <= write_data_in[7:0] // 1 byte at once
 
-## Runtime output (tests/tpm_test.sv)
+## Runtime output (test/tpm_test.sv)
 
 #[3] read_address_0: 0x00 read_data_0: 0xxxxxxxxx  
 #read_address_1: xff read_data_1: 0xxxxxxxxx  
