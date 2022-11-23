@@ -1,7 +1,7 @@
 module tri_port_memory#(
     ADDRESS_WIDTH = 8
 )(
-    input write_in, write_clock_in, read_clock_in, 
+    input write_in, write_clock_in, read_clock_in, read_en_0_in, read_en_1_in, 
     input logic [1:0] memMode_in,
     input logic [ADDRESS_WIDTH - 1:0] read_address_0_in, read_address_1_in, write_address_in,
     input logic [31:0] write_data_in,
@@ -12,6 +12,8 @@ module tri_port_memory#(
     logic [7:0] bank2 [2**ADDRESS_WIDTH - 3:0];
     logic [7:0] bank1 [2**ADDRESS_WIDTH - 3:0];
     logic [7:0] bank0 [2**ADDRESS_WIDTH - 3:0];
+
+    logic [31:0] read_data_0, read_data_1;
 
     
 
@@ -72,15 +74,18 @@ module tri_port_memory#(
     
     always_ff @(posedge read_clock_in) 
     begin
-        read_data_0_out[31:24] <= bank3[read_address_0_in[ADDRESS_WIDTH-1:2]];
-        read_data_0_out[23:16] <= bank2[read_address_0_in[ADDRESS_WIDTH-1:2]];
-        read_data_0_out[15:8]  <= bank1[read_address_0_in[ADDRESS_WIDTH-1:2]];
-        read_data_0_out[7:0]   <= bank0[read_address_0_in[ADDRESS_WIDTH-1:2]];
+        read_data_0[31:24] <= bank3[read_address_0_in[ADDRESS_WIDTH-1:2]];
+        read_data_0[23:16] <= bank2[read_address_0_in[ADDRESS_WIDTH-1:2]];
+        read_data_0[15:8]  <= bank1[read_address_0_in[ADDRESS_WIDTH-1:2]];
+        read_data_0[7:0]   <= bank0[read_address_0_in[ADDRESS_WIDTH-1:2]];
         
-        read_data_1_out[31:24] <= bank3[read_address_1_in[ADDRESS_WIDTH-1:2]];
-        read_data_1_out[23:16] <= bank2[read_address_1_in[ADDRESS_WIDTH-1:2]];
-        read_data_1_out[15:8]  <= bank1[read_address_1_in[ADDRESS_WIDTH-1:2]];
-        read_data_1_out[7:0]   <= bank0[read_address_1_in[ADDRESS_WIDTH-1:2]];
+        read_data_1[31:24] <= bank3[read_address_1_in[ADDRESS_WIDTH-1:2]];
+        read_data_1[23:16] <= bank2[read_address_1_in[ADDRESS_WIDTH-1:2]];
+        read_data_1[15:8]  <= bank1[read_address_1_in[ADDRESS_WIDTH-1:2]];
+        read_data_1[7:0]   <= bank0[read_address_1_in[ADDRESS_WIDTH-1:2]];
     end	 
+
+    assign read_data_0_out = read_en_0_in ? read_data_0 : {32{1'bz}};
+    assign read_data_1_out = read_en_1_in ? read_data_1 : {32{1'bz}};
 
 endmodule
