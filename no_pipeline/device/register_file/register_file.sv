@@ -1,6 +1,6 @@
 module register_file#(
-    DATA_WIDTH = 16,
-    ADDRESS_WIDTH = 5
+    parameter DATA_WIDTH = 16,
+    parameter ADDRESS_WIDTH = 5
 )
 (
     input regWrite_in, clock_in,

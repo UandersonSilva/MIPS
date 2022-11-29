@@ -1,5 +1,5 @@
 module tri_port_memory#(
-    ADDRESS_WIDTH = 8
+    parameter ADDRESS_WIDTH = 8
 )(
     input write_in, write_clock_in, read_clock_in, read_en_0_in, read_en_1_in, 
     input logic [1:0] memMode_in,
@@ -8,10 +8,10 @@ module tri_port_memory#(
     output logic [31:0] read_data_0_out, read_data_1_out
 );
 
-    logic [7:0] bank3 [2**ADDRESS_WIDTH - 3:0];
-    logic [7:0] bank2 [2**ADDRESS_WIDTH - 3:0];
-    logic [7:0] bank1 [2**ADDRESS_WIDTH - 3:0];
-    logic [7:0] bank0 [2**ADDRESS_WIDTH - 3:0];
+    logic [7:0] bank3 [2**(ADDRESS_WIDTH-2) - 1:0];
+    logic [7:0] bank2 [2**(ADDRESS_WIDTH-2) - 1:0];
+    logic [7:0] bank1 [2**(ADDRESS_WIDTH-2) - 1:0];
+    logic [7:0] bank0 [2**(ADDRESS_WIDTH-2) - 1:0];
 
     logic [31:0] read_data_0, read_data_1;
 
