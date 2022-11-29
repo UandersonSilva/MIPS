@@ -5,7 +5,7 @@ In this MIPS structure, all instructions take the same number of clock cycles (m
 The following instructions will be available:
  - The memory-reference instructions load word (lw) and store word (sw);
  - The arithmetic-logical R-type (register reference) instructions add, sub, AND, OR and slt;
- - The arithmetic-logical I-type (immediate) addiu, andi and ori;
+ - The arithmetic-logical I-type (immediate) addiu;
  - The instructions branch equal (beq) and jump (j).
 Other integer instructions (shift, multiply, divide) and floating point instructions will not be included in this version.
 
@@ -20,7 +20,7 @@ The opcode field [31:26] is 0, rs and rt fields are source registers, and rd the
 
 ![MIPS I-type instr](alib/MIPS_I_type_instr.svg)
 
-The opcode field is 9 (6'b001001) for addiu, 12 (6'b001100) for ANDI and 13 (6'b001101) for ORI. The rs register contains one of the sources values and the rt is the destination register. The other source value comes from the 16-bit immediate field, that is extended to a 32-bit word according to the operation. If the operation to be performed is addiu, it is used the sign extended value. Otherwise, it is used the zero extended value.
+The opcode field is 9 (6'b001001) for addiu. The rs register contains one of the sources values and the rt is the destination register. The other source value comes from the 16-bit immediate field, that is extended to a 32-bit word according to the operation. If the operation to be performed is addiu, it is used the sign extended value. Otherwise, it is used the zero extended value.
 
 - Memory-reference instructions
 
