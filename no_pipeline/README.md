@@ -20,7 +20,7 @@ The opcode field [31:26] is 0, rs and rt fields are source registers, and rd the
 
 ![MIPS I-type instr](alib/MIPS_I_type_instr.svg)
 
-The opcode field is 9 (6'b001001) for addiu, 12 (6'b001100) for ANDI and 13 (6'b001101) for ORI. The rs register contains one of sources values and the rt is the destination register. The other source value comes from the 16-bit immediate field, that is extended to a 32-bit word according to the operation. If the oparation to be performed is addiu, it is used the sign extended value. Otherwise, it is used the zero extended value.
+The opcode field is 9 (6'b001001) for addiu, 12 (6'b001100) for ANDI and 13 (6'b001101) for ORI. The rs register contains one of the sources values and the rt is the destination register. The other source value comes from the 16-bit immediate field, that is extended to a 32-bit word according to the operation. If the operation to be performed is addiu, it is used the sign extended value. Otherwise, it is used the zero extended value.
 
 - Memory-reference instructions
 
