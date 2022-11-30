@@ -18,7 +18,7 @@ opcode |Instr. type  | Branch | Jump | MemtoReg | MemRead | MemWrite | AluSrc | 
 #control_code: branch[9], jump[8], memtoReg[7], memRead[6], memWrite[5], aluSrc[4], aluOp[3:2], regWrite[1], regDst[0]  
 #[1] opcode_in: 000000 => control_code: 0000001011  
 #[2] opcode_in: 000010 => control_code: 0100000000  
-#[3] opcode_in: 000100 => control_code: 1000000100
+#[3] opcode_in: 000100 => control_code: 1000000100  
 #[4] opcode_in: 001001 => control_code: 0000010011  
 #[5] opcode_in: 100011 => control_code: 0011010010  
 #[6] opcode_in: 101011 => control_code: 0000110000  
