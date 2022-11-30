@@ -48,6 +48,20 @@ module control(
                 regDst_out   <= 1'b0;
             end
 
+            6'b001001: //I-type(addiu)
+            begin
+                branch_out   <= 1'b0;
+                jump_out     <= 1'b0;
+                memtoReg_out <= 1'b0;
+                memRead_out  <= 1'b0;
+                memWrite_out <= 1'b0;
+                aluSrc_out   <= 1'b1;
+                aluOp_out    <= 2'b00;
+                regWrite_out <= 1'b1;
+                regDst_out   <= 1'b1;
+            end
+
+
             6'b100011: //mem-ref (lw)
             begin
                 branch_out   <= 1'b0;

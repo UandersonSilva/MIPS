@@ -40,6 +40,9 @@ module control_test;
         opcode = 6'b000100;
         #1 display_bits();
 
+        opcode = 6'b001001;
+        #1 display_bits();
+
         opcode = 6'b100011;
         #1 display_bits();
 
