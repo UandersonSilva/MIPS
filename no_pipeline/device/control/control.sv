@@ -58,7 +58,7 @@ module control(
                 aluSrc_out   <= 1'b1;
                 aluOp_out    <= 2'b00;
                 regWrite_out <= 1'b1;
-                regDst_out   <= 1'b1;
+                regDst_out   <= 1'b0;
             end
 
 
