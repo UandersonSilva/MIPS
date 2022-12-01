@@ -20,7 +20,3 @@ This MIPS description has the following conncections:
 - **read_instr_out:** value in imem[instr_address_in];
 - **read_data_address_in:** data address;
 - **read_data_out:** value in dmem[read_data_address_in].  
-
-
-
-
