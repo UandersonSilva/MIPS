@@ -22,7 +22,7 @@ module mips_np(
     logic [3:0] aluCtrl;
     logic [1:0] aluOp;
     logic zero, jump, branch, memtoReg, memRead, memWrite;
-    logic aluSrc, regDst, regWrite; 
+    logic aluSrc, regDst, regWrite, clock_delayed; 
     
     assign opcode  = instruction[31:26];
     assign rs      = instruction[25:21];
@@ -82,7 +82,7 @@ module mips_np(
         .read_en_0_in(1'b1),
         .read_en_1_in(1'b1),
         .memMode_in(2'b00), //write word
-        .read_clock_in(~clock_in),
+        .read_clock_in(~clock_delayed),
         .write_clock_in(instr_clock_in),
         .read_data_0_out(read_instr_out),
         .read_data_1_out(instruction)
@@ -97,7 +97,7 @@ module mips_np(
         .read_en_0_in(memRead),
         .read_en_1_in(1'b1),
         .memMode_in(2'b00), //write word
-        .read_clock_in(~clock_in),
+        .read_clock_in(~clock_delayed),
         .write_clock_in(clock_in),
         .read_data_0_out(data),
         .read_data_1_out(read_data_out)
@@ -133,5 +133,10 @@ module mips_np(
         .funct_in(funct),
         .aluCtrl_out(aluCtrl)
     );
+
+    always @(clock_in)
+    begin
+        clock_delayed <= #(0.25) clock_in; 
+    end
 
 endmodule
