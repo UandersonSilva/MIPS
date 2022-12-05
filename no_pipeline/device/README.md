@@ -12,7 +12,7 @@ On the falling edge, the PC value, the register file and the memories outputs ar
 
 ![mips_np representation](../alib/mips_np_representation.svg)  
 
-This MIPS description has the following conncections:
+This MIPS description has the following connections:
 - **clock_in:** main clock signal;
 - **reset_in:** it resets PC to 0;
 - **instr_clock_in:** clock signal for instructions writing;
