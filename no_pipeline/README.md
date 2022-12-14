@@ -39,6 +39,7 @@ The opcode field [31:26] is 4 (6'b000100) for branch equal (beq). The registers 
 ![MIPS j instr](alib/MIPS_j_instr.svg)
 
 The opcode field [31:26] is 2 (6'b000010) for jump (j). The jump target address is composed by the 4 most significant bits of current PC + 4 (next instruction address) concatenated with the 26-bit address field. The 2 least significant bits remaining receive 00. 
+next_PC <= {PC_plus_4[31:28], address, 2'b00}
 
 ## Structure
 
