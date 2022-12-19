@@ -12,7 +12,8 @@ class data_item;
         same = (compared.instr_address_in == instr_address_in) &&
             (compared.read_data_address_in == read_data_address_in) && 
             (compared.instr_in == instr_in) && 
-            (compared.instrWrite_in == instrWrite_in) && 
+            (compared.instrWrite_in == instrWrite_in) &&
+            (compared.reset_in == reset_in) && 
             (compared.read_instr_out == read_instr_out) &&
             (compared.read_data_out == read_data_out);;
 
@@ -24,6 +25,7 @@ class data_item;
         read_data_address_in = copied.read_data_address_in;
         instr_in             = copied.instr_in;
         instrWrite_in        = copied.instrWrite_in;
+        reset_in             = copied.reset_in;
         read_instr_out       = copied.read_instr_out;
         read_data_out        = copied.read_data_out;
     endfunction : copy
@@ -36,6 +38,7 @@ class data_item;
         cloned.read_data_address_in = read_data_address_in
         cloned.instr_in             = instr_in;
         cloned.instrWrite_in        = instrWrite_in;
+        cloned.reset_in             = reset_in;
         cloned.read_instr_out       = read_instr_out;
         cloned.read_data_out        = read_data_out;
 
@@ -97,8 +100,8 @@ class data_item;
 
 
         s = $sformatf("instr_address_in: %32b", instr_address_in, 
-        " instr_in: %s", instr_format_in, "instrWrite_in: %b", instrWrite_in, 
-        " read_data_address_in: %32b", read_data_address_in, 
+        " instr_in: %s", instr_format_in, " instrWrite_in: %b", instrWrite_in, 
+        " reset_in: %b", reset_in, " read_data_address_in: %32b", read_data_address_in, 
         " :: read_instr_out: %s", instr_format_out, " read_data_out: %32b", read_data_out);
 
         return s;
@@ -162,8 +165,8 @@ class data_item;
         endcase
 
         s = $sformatf("instr_address_in: 0x%8h", instr_address_in, 
-        " instr_in: %s", instr_format_in, "instrWrite_in: ", instrWrite_in,
-        " read_data_address_in: 0x%8h", read_data_address_in, 
+        " instr_in: %s", instr_format_in, " instrWrite_in: %b", instrWrite_in,
+        " reset_in: %b", reset_in, " read_data_address_in: 0x%8h", read_data_address_in, 
         " :: read_instr_out: %s", instr_format_out, " read_data_out: 0x%8h", read_data_out);
 
         return s;

@@ -12,6 +12,7 @@ class input_monitor;
         t_in.read_data_address_in = read_data_address_in;
         t_in.instr_in             = instr_in;
         t_in.instrWrite_in        = instrWrite_in;
+        t_in.reset_in             = reset_in;
 
         monitor_tp.write(t_in);
     endfunction : read

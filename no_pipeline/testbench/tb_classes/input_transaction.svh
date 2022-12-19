@@ -1,5 +1,6 @@
 class input_transaction;
-    logic [WIDTH-1:0] instr_address_in, read_data_address_in, instr_in, instrWrite_in;
+    logic [WIDTH-1:0] instr_address_in, read_data_address_in, instr_in;
+    logic instrWrite_in, reset_in;
 
     function bit compare(input_transaction compared);
         bit same = 0;
@@ -8,7 +9,9 @@ class input_transaction;
         else
             same = (compared.instr_address_in == instr_address_in) &&
                    (compared.read_data_address_in == read_data_address_in) && 
-                   (compared.instr_in == instr_in) && (compared.instrWrite_in == instrWrite_in);
+                   (compared.instr_in == instr_in) && 
+                   (compared.instrWrite_in == instrWrite_in) && 
+                   (compared.reset_in == reset_in);
         return same;
     endfunction : compare
 
@@ -17,6 +20,7 @@ class input_transaction;
         read_data_address_in = copied.read_data_address_in;
         instr_in             = copied.instr_in;
         instrWrite_in        = copied.instrWrite_in;
+        reset_in             = copied.reset_in;
     endfunction : copy
 
     function input_transaction clone();
@@ -27,6 +31,7 @@ class input_transaction;
         cloned.read_data_address_in = read_data_address_in
         cloned.instr_in             = instr_in;
         cloned.instrWrite_in        = instrWrite_in;
+        cloned.reset_in             = reset_in;
 
         return cloned;
     endfunction : clone
@@ -61,7 +66,7 @@ class input_transaction;
 
         s = $sformatf("instr_address_in: %32b", instr_address_in, 
         " instr_in: %s", instr_format, "instrWrite_in: %b", instrWrite_in, 
-        " read_data_address_in: %32b", read_data_address_in);
+        " reset_in: %b", reset_in, " read_data_address_in: %32b", read_data_address_in);
 
         return s;
     endfunction : convert2string_b
@@ -99,7 +104,7 @@ class input_transaction;
 
         s = $sformatf("instr_address_in: 0x%8h", instr_address_in, 
         " instr_in: %s", instr_format, "instrWrite_in: ", instrWrite_in,
-        " read_data_address_in: 0x%8h", read_data_address_in);
+        " reset_in: %b", reset_in, " read_data_address_in: 0x%8h", read_data_address_in);
 
         return s;
     endfunction : convert2string
