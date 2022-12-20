@@ -82,15 +82,25 @@ class input_transaction;
         case(opcode)
             _r_type:
             begin
-                instr_format = $sformatf("%s $%0d, $%0d, $%0d", funct.name(), 
-                                                            instr_in[25:21], 
-                                                            instr_in[20:16],
-                                                            instr_in[15:11]);
+                if(funct == 6'b000000)
+                    instr_format = $sformatf("end");
+                else
+                begin
+                    instr_format = $sformatf("%s $%0d, $%0d, $%0d", funct.name(), 
+                                                                instr_in[25:21], 
+                                                                instr_in[20:16],
+                                                                instr_in[15:11]);
+                end
             end
 
             _j:
             begin
                 instr_format = $sformatf("%s 0x%7h", opcode.name(), instr_in[25:0]);       
+            end
+
+            _check:
+            begin
+                instr_format = $sformatf("checking");
             end
 
             default:

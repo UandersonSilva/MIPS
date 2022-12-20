@@ -1,5 +1,6 @@
 class data_item;
-    logic [WIDTH-1:0] instr_address_in, read_data_address_in, instr_in, instrWrite_in;
+    logic [WIDTH-1:0] instr_address_in, read_data_address_in, instr_in; 
+    logic instrWrite_in, reset_in;
     logic [WIDTH-1:0] read_instr_out, read_data_out;
 
     event done;
@@ -64,6 +65,11 @@ class data_item;
                 instr_format_in = $sformatf("%6b_%26b", instr_in[31:26], instr_in[25:0]);       
             end
 
+            _check:
+            begin
+                instr_format_in = $sformatf("checking");
+            end
+
             default:
             begin
                 instr_format_in = $sformatf("%6b_%5b_%5b_%16b", instr_in[31:26], 
@@ -87,6 +93,11 @@ class data_item;
             _j:
             begin
                 instr_format_out = $sformatf("%6b_%26b", read_instr_out[31:26], read_instr_out[25:0]);       
+            end
+
+            _check:
+            begin
+                instr_format_in = $sformatf("checking");
             end
 
             default:
@@ -118,15 +129,25 @@ class data_item;
         case(opcode)
             _r_type:
             begin
-                instr_format_in = $sformatf("%s $%0d, $%0d, $%0d", funct.name(), 
-                                                            instr_in[25:21], 
-                                                            instr_in[20:16],
-                                                            instr_in[15:11]);
+                if(funct == 6'b000000)
+                    instr_format_in = $sformatf("end");
+                else
+                begin
+                    instr_format_in = $sformatf("%s $%0d, $%0d, $%0d", funct.name(), 
+                                                                instr_in[25:21], 
+                                                                instr_in[20:16],
+                                                                instr_in[15:11]);
+                end
             end
 
             _j:
             begin
                 instr_format_in = $sformatf("%s 0x%7h", opcode.name(), instr_in[25:0]);       
+            end
+
+            _check:
+            begin
+                instr_format_in = $sformatf("checking");
             end
 
             default:
@@ -144,15 +165,25 @@ class data_item;
         case(opcode)
             _r_type:
             begin
-                instr_format_out = $sformatf("%s $%0d, $%0d, $%0d", funct.name(), 
-                                                            read_instr_out[25:21], 
-                                                            read_instr_out[20:16],
-                                                            read_instr_out[15:11]);
+                if(funct == 6'b000000)
+                    instr_format_out = $sformatf("end");
+                else
+                begin
+                    instr_format_out = $sformatf("%s $%0d, $%0d, $%0d", funct.name(), 
+                                                                instr_in[25:21], 
+                                                                instr_in[20:16],
+                                                                instr_in[15:11]);
+                end
             end
 
             _j:
             begin
                 instr_format_out = $sformatf("%s 0x%7h", opcode.name(), read_instr_out[25:0]);       
+            end
+
+            _check:
+            begin
+                instr_format_in = $sformatf("checking");
             end
 
             default:

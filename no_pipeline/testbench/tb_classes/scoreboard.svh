@@ -40,27 +40,32 @@ class scoreboard;
                     case(funct)
                     _add:
                     begin
-                        vrf[rd] = vrf[rs] + vrf[rt];
+                        if(rd != 5'd0)
+                            vrf[rd] = vrf[rs] + vrf[rt];
                     end
 
                     _sub:
                     begin
-                        vrf[rd] = vrf[rs] - vrf[rt];
+                        if(rd != 5'd0)
+                            vrf[rd] = vrf[rs] - vrf[rt];
                     end
                     
                     _AND:
                     begin
-                        vrf[rd] = vrf[rs] & vrf[rt];
+                        if(rd != 5'd0)
+                            vrf[rd] = vrf[rs] & vrf[rt];
                     end
                     
                     _OR:
                     begin
-                        vrf[rd] = vrf[rs] | vrf[rt];
+                        if(rd != 5'd0)
+                            vrf[rd] = vrf[rs] | vrf[rt];
                     end
                     
                     _slt:
                     begin
-                        vrf[rd] = (vrf[rs] < vrf[rt]) ? {{(WIDTH-1){1'b0}}, 1'b1} : {WIDTH{1'b0}};
+                        if(rd != 5'd0)
+                            vrf[rd] = (vrf[rs] < vrf[rt]) ? {{(WIDTH-1){1'b0}}, 1'b1} : {WIDTH{1'b0}};
                     end
                     
                     default:
@@ -81,12 +86,14 @@ class scoreboard;
 
                 _addiu:
                 begin
-                    vrf[rt] = vrf[rs] + {{14{imm[15]}}, imm};
+                    if(rt != 5'd0)
+                        vrf[rt] = vrf[rs] + {{14{imm[15]}}, imm};
                 end
                 
                 _lw:
                 begin
-                    vrf[rt] = vdmem[vrf[rs] + {{14{imm[15]}}, imm}];
+                    if(rt != 5'd0)
+                        vrf[rt] = vdmem[vrf[rs] + {{14{imm[15]}}, imm}];
                 end
                 
                 _sw:
@@ -125,6 +132,7 @@ class scoreboard;
                 begin 
                     imem[t_in.instr_address_in[31:2]] = t_in.instr;
                     instr_count++;
+                    $display("%0t [SCOREBOARD]: Input:: ", $time, t_in.convert2string());
                 end
             end
 
@@ -149,8 +157,10 @@ class scoreboard;
 
                         t_predicted.read_data_out = vdmem[t_in.read_data_address_in[31:2]];
 
-                        if(t_out.read_instr_out[31:26] == _sw)
+                        if(t_in.instr_in[31:26] == _check)
                         begin
+                            $display("%0t [SCOREBOARD]: Input:: ", $time, t_in.convert2string());
+
                             if(predicted.compare(t_out))
                             begin
                                 //$write("%c[2;34m",27);//blue
