@@ -5,112 +5,107 @@ class scoreboard;
     logic [WIDTH - 1:0] vrf [4:0];
     logic [WIDTH - 1:0] vdmem [2**(WIDTH - 2) - 1:0];
     logic [WIDTH - 1:0] vimem [2**(WIDTH - 2) - 1:0];
+    logic [WIDTH - 1:0] vpc = 32'b0;
+    
+    logic [WIDTH - 1:0] imm, instruction, target;
+    logic [4:0] rs, rt, rd;
 
     opcode_t opcode;
     funct_t funct;
-
-    integer instr_count = 0;
 
     event input_read;
     event output_read;
 
     function void execute();
-        logic [WIDTH - 1:0] imm, instruction, vpc, target;
-        logic [4:0] rs, rt, rd;
-
         vrf [5'b0] = 32'b0;
-        vpc = 32'b0;
 
-        do
-        begin
-            instruction = vimem[vpc[31:2]];
+        instruction = vimem[vpc[31:2]];
 
-            opcode = instruction[31:26];
-            funct  = instruction[5:0];
+        opcode = instruction[31:26];
+        funct  = instruction[5:0];
 
-            rs = instruction[25:21]; 
-            rt = instruction[20:16];
-            rd = instruction[15:11];
+        rs = instruction[25:21]; 
+        rt = instruction[20:16];
+        rd = instruction[15:11];
 
-            imm = [15:0];
+        imm = [15:0];
 
-            case(opcode)
-                _r_type:
+        case(opcode)
+            _r_type:
+            begin
+                case(funct)
+                _add:
                 begin
-                    case(funct)
-                    _add:
-                    begin
-                        if(rd != 5'd0)
-                            vrf[rd] = vrf[rs] + vrf[rt];
-                    end
-
-                    _sub:
-                    begin
-                        if(rd != 5'd0)
-                            vrf[rd] = vrf[rs] - vrf[rt];
-                    end
-                    
-                    _AND:
-                    begin
-                        if(rd != 5'd0)
-                            vrf[rd] = vrf[rs] & vrf[rt];
-                    end
-                    
-                    _OR:
-                    begin
-                        if(rd != 5'd0)
-                            vrf[rd] = vrf[rs] | vrf[rt];
-                    end
-                    
-                    _slt:
-                    begin
-                        if(rd != 5'd0)
-                            vrf[rd] = (vrf[rs] < vrf[rt]) ? {{(WIDTH-1){1'b0}}, 1'b1} : {WIDTH{1'b0}};
-                    end
-                    
-                    default:
-                    begin
-                    end
-                    endcase
+                    if(rd != 5'd0)
+                        vrf[rd] = vrf[rs] + vrf[rt];
                 end
 
-                _j:
+                _sub:
                 begin
-                    target = {vpc[31:28], instruction[25:0], 2'b00};
-                end
-
-                _beq:
-                begin
-                    target = ((vrf[rs] - vrf[rt]) == 32'b0) ? vpc + 32'd4 + imm : vpc + 32'd4;
-                end
-
-                _addiu:
-                begin
-                    if(rt != 5'd0)
-                        vrf[rt] = vrf[rs] + {{14{imm[15]}}, imm};
+                    if(rd != 5'd0)
+                        vrf[rd] = vrf[rs] - vrf[rt];
                 end
                 
-                _lw:
+                _AND:
                 begin
-                    if(rt != 5'd0)
-                        vrf[rt] = vdmem[vrf[rs] + {{14{imm[15]}}, imm}];
+                    if(rd != 5'd0)
+                        vrf[rd] = vrf[rs] & vrf[rt];
                 end
                 
-                _sw:
+                _OR:
                 begin
-                    vdmem[vrf[rs] + {{14{imm[15]}}, imm}] = vrf[rt];
+                    if(rd != 5'd0)
+                        vrf[rd] = vrf[rs] | vrf[rt];
                 end
-
+                
+                _slt:
+                begin
+                    if(rd != 5'd0)
+                        vrf[rd] = (vrf[rs] < vrf[rt]) ? {{(WIDTH-1){1'b0}}, 1'b1} : {WIDTH{1'b0}};
+                end
+                
                 default:
                 begin
-                    
                 end
-            endcase
+                endcase
+            end
 
-            vpc = (opcode == _j || opcode == _beq) ? target : vpc + 32'b4;
+            _j:
+            begin
+                target = {vpc[31:28], instruction[25:0], 2'b00};
+            end
 
-        end
-        while(vimem[vpc[31:2]] != 32'b0);
+            _beq:
+            begin
+                target = ((vrf[rs] - vrf[rt]) == 32'b0) ? vpc + 32'd4 + imm : vpc + 32'd4;
+            end
+
+            _addiu:
+            begin
+                if(rt != 5'd0)
+                    vrf[rt] = vrf[rs] + {{14{imm[15]}}, imm};
+            end
+            
+            _lw:
+            begin
+                if(rt != 5'd0)
+                    vrf[rt] = vdmem[vrf[rs] + {{14{imm[15]}}, imm}];
+            end
+            
+            _sw:
+            begin
+                vdmem[vrf[rs] + {{14{imm[15]}}, imm}] = vrf[rt];
+            end
+
+            default:
+            begin
+                
+            end
+        endcase
+
+        vpc = (opcode == _j || opcode == _beq) ? target : vpc + 32'b4;
+
+        
     endfunction : execute
 
     task run();
@@ -131,7 +126,6 @@ class scoreboard;
                 if(t_in.instrWrite_in)
                 begin 
                     imem[t_in.instr_address_in[31:2]] = t_in.instr;
-                    instr_count++;
                     $display("%0t [SCOREBOARD]: Input:: ", $time, t_in.convert2string());
                 end
             end
@@ -145,11 +139,7 @@ class scoreboard;
                     $display("%0t [SCOREBOARD]: No output transaction. Null pointer.", $time);
                 else
                 begin
-                    if(!t_in.instrWrite_in && (instr_count > 0))
-                    begin
-                        instr_count--;
-                    end
-                    else
+                    if(!t_in.instrWrite_in)
                     begin
                         execute();
 
