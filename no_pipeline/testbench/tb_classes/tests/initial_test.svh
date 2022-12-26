@@ -230,9 +230,22 @@ class initial_test extends base_test;
 
         super.obtain_data();
 
+        data_i = new();
+        data_i.reset_in             = 1'b1;
+        data_i.instr_in             = 32'b000000_00000000000000000000_000000; //end
+        data_i.instr_address_in     = 32'h0000004c;
+        data_i.read_data_address_in = 32'h0000001c;
+        data_i.instrWrite_in        = 1'b1;
+        super.insert_data();
+      
+        @(data_i.done);
+
+        super.obtain_data();
+
         //Start execution
 
-        while($isunknown(previous.read_data_out))
+        //while($isunknown(previous_data.read_data_out))
+        while(previous_data.read_data_out === {WIDTH{1'bx}})
         begin
             data_i = new();
             data_i.reset_in             = 1'b0;
