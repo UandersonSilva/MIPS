@@ -4,7 +4,8 @@ class input_monitor;
     function void read(logic [WIDTH-1:0] instr_address_in, 
                         logic [WIDTH-1:0] read_data_address_in, 
                         logic [WIDTH-1:0] instr_in,
-                        logic instrWrite_in);
+                        logic instrWrite_in,
+                        logic reset_in);
         input_transaction t_in;
         t_in = new();
 

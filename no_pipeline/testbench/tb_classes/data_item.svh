@@ -36,7 +36,7 @@ class data_item;
         cloned = new();
 
         cloned.instr_address_in     = instr_address_in;
-        cloned.read_data_address_in = read_data_address_in
+        cloned.read_data_address_in = read_data_address_in;
         cloned.instr_in             = instr_in;
         cloned.instrWrite_in        = instrWrite_in;
         cloned.reset_in             = reset_in;
@@ -123,8 +123,8 @@ class data_item;
         opcode_t opcode;
         funct_t funct;
 
-        opcode = instr_in[31:26];
-        funct  = instr_in[5:0];
+        opcode = opcode_t'(instr_in[31:26]);
+        funct  = funct_t'(instr_in[5:0]);
 
         case(opcode)
             _r_type:
@@ -159,8 +159,8 @@ class data_item;
             end
         endcase
 
-        opcode = read_instr_out[31:26];
-        funct  = read_instr_out[5:0];
+        opcode = opcode_t'(read_instr_out[31:26]);
+        funct  = funct_t'(read_instr_out[5:0]);
 
         case(opcode)
             _r_type:

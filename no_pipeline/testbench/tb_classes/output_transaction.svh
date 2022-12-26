@@ -52,7 +52,7 @@ class output_transaction;
             end
         endcase
 
-        s = $sformatf("read_instr_out: %s", instr_format, " read_data_out: %32b", read_data_out);
+        s = $sformatf("read_instr_out: ", instr_format, " read_data_out: %32b", read_data_out);
 
         return s;
     endfunction : convert2string_b
@@ -62,8 +62,8 @@ class output_transaction;
         opcode_t opcode;
         funct_t funct;
 
-        opcode = read_instr_out[31:26];
-        funct  = read_instr_out[5:0];
+        opcode = opcode_t'(read_instr_out[31:26]);
+        funct = funct_t'(read_instr_out[5:0]);
 
         case(opcode)
             _r_type:
@@ -73,9 +73,9 @@ class output_transaction;
                 else
                 begin
                     instr_format = $sformatf("%s $%0d, $%0d, $%0d", funct.name(), 
-                                                                instr_in[25:21], 
-                                                                instr_in[20:16],
-                                                                instr_in[15:11]);
+                                                                read_instr_out[25:21], 
+                                                                read_instr_out[20:16],
+                                                                read_instr_out[15:11]);
                 end
             end
 
@@ -98,7 +98,7 @@ class output_transaction;
             end
         endcase
 
-        s = $sformatf("read_instr_out: %s", instr_format, " read_data_out: 0x%8h", read_data_out);
+        s = $sformatf("read_instr_out: ", instr_format, " read_data_out: 0x%8h", read_data_out);
 
         return s;
     endfunction : convert2string

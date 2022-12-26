@@ -28,7 +28,7 @@ class input_transaction;
         cloned = new();
 
         cloned.instr_address_in     = instr_address_in;
-        cloned.read_data_address_in = read_data_address_in
+        cloned.read_data_address_in = read_data_address_in;
         cloned.instr_in             = instr_in;
         cloned.instrWrite_in        = instrWrite_in;
         cloned.reset_in             = reset_in;
@@ -65,7 +65,7 @@ class input_transaction;
         endcase
 
         s = $sformatf("instr_address_in: %32b", instr_address_in, 
-        " instr_in: %s", instr_format, "instrWrite_in: %b", instrWrite_in, 
+        " instr_in: ", instr_format, "instrWrite_in: %b", instrWrite_in, 
         " reset_in: %b", reset_in, " read_data_address_in: %32b", read_data_address_in);
 
         return s;
@@ -76,8 +76,8 @@ class input_transaction;
         opcode_t opcode;
         funct_t funct;
 
-        opcode = instr_in[31:26];
-        funct  = instr_in[5:0];
+        opcode = opcode_t'(instr_in[31:26]);
+        funct = funct_t'(instr_in[5:0]);
 
         case(opcode)
             _r_type:
@@ -113,7 +113,7 @@ class input_transaction;
         endcase
 
         s = $sformatf("instr_address_in: 0x%8h", instr_address_in, 
-        " instr_in: %s", instr_format, "instrWrite_in: ", instrWrite_in,
+        " instr_in: ", instr_format, " instrWrite_in: ", instrWrite_in,
         " reset_in: %b", reset_in, " read_data_address_in: 0x%8h", read_data_address_in);
 
         return s;
