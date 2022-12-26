@@ -3,12 +3,23 @@ class scoreboard;
     transaction_port #(output_transaction) scoreboard_tp_out;
 
     logic [WIDTH - 1:0] vrf [4:0];
-    logic [WIDTH - 1:0] vdmem [2**(WIDTH - 2) - 1:0];
-    logic [WIDTH - 1:0] vimem [2**(WIDTH - 2) - 1:0];
     logic [WIDTH - 1:0] vpc = 32'b0;
     
     logic [WIDTH - 1:0] imm, instruction, target;
     logic [4:0] rs, rt, rd;
+
+    typedef struct {
+        logic [WIDTH - 2:0] address;
+        logic [WIDTH - 1:0] data;
+    } vdmem;
+
+    typedef struct {
+        logic [WIDTH - 2:0] address;
+        logic [WIDTH - 1:0] instruction;
+    } vimem;
+
+    vdmem dmem_array [];
+    vimem imem_array [];
 
     opcode_t opcode;
     funct_t funct;
@@ -16,19 +27,35 @@ class scoreboard;
     event input_read;
     event output_read;
 
+    function new();
+        dmem_array =  new[1];
+        imem_array =  new[1];
+    endfunction : new
+
     function void execute();
         vrf [5'b0] = 32'b0;
 
-        instruction = vimem[vpc[31:2]];
+        //instruction = vimem[vpc[31:2]];
 
-        opcode = instruction[31:26];
-        funct  = instruction[5:0];
+        foreach(imem_array[i])
+        begin
+            if(imem_array[i].address == vpc[31:2])
+            begin
+                instruction = imem_array[i].instruction;
+                break;
+            end
+        end
+
+        //$cast(opcode, instruction[31:26]);
+        //$cast(funct, instruction[5:0]);
+        opcode = opcode_t'(instruction[31:26]);
+        funct  = funct_t'(instruction[5:0]);
 
         rs = instruction[25:21]; 
         rt = instruction[20:16];
         rd = instruction[15:11];
 
-        imm = [15:0];
+        imm = {{16{instruction[15]}}, instruction[15:0]};
 
         case(opcode)
             _r_type:
@@ -89,12 +116,22 @@ class scoreboard;
             _lw:
             begin
                 if(rt != 5'd0)
-                    vrf[rt] = vdmem[vrf[rs] + {{14{imm[15]}}, imm}];
+                begin
+                    foreach(dmem_array[j])
+                    begin
+                        if(dmem_array[j].address == (vrf[rs] + {{14{imm[15]}}, imm}))
+                        begin
+                            vrf[rt] = dmem_array[j].data;
+                            break;
+                        end
+                    end
+                end
             end
             
             _sw:
             begin
-                vdmem[vrf[rs] + {{14{imm[15]}}, imm}] = vrf[rt];
+                dmem_array[dmem_array.size()-1] = '{(vrf[rs] + {{14{imm[15]}}, imm}), vrf[rt]};
+                dmem_array = new[dmem_array.size()+1](dmem_array);
             end
 
             default:
@@ -103,7 +140,7 @@ class scoreboard;
             end
         endcase
 
-        vpc = (opcode == _j || opcode == _beq) ? target : vpc + 32'b4;
+        vpc = (opcode == _j || opcode == _beq) ? target : vpc + 32'd4;
 
         
     endfunction : execute
@@ -124,8 +161,10 @@ class scoreboard;
             else
             begin
                 if(t_in.instrWrite_in)
-                begin 
-                    imem[t_in.instr_address_in[31:2]] = t_in.instr;
+                begin
+                    imem_array[imem_array.size()-1] = '{t_in.instr_address_in[31:2], t_in.instr_in};
+                    imem_array = new[imem_array.size()+1](imem_array); 
+                    
                     $display("%0t [SCOREBOARD]: Input:: ", $time, t_in.convert2string());
                 end
             end
@@ -145,9 +184,16 @@ class scoreboard;
 
                         predicted.copy(t_out);
 
-                        t_predicted.read_data_out = vdmem[t_in.read_data_address_in[31:2]];
+                        foreach(dmem_array[k])
+                        begin
+                            if(dmem_array[k].address == t_in.read_data_address_in[31:2])
+                            begin
+                                predicted.read_data_out = dmem_array[k].data;
+                                break;
+                            end
+                        end
 
-                        if(t_in.instr_in[31:26] == _check)
+                        if(t_in.instr_in[31:26] == 6'b111111)
                         begin
                             $display("%0t [SCOREBOARD]: Input:: ", $time, t_in.convert2string());
 
