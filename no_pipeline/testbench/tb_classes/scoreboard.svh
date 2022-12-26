@@ -130,8 +130,22 @@ class scoreboard;
             
             _sw:
             begin
-                dmem_array[dmem_array.size()-1] = '{(vrf[rs] + {{14{imm[15]}}, imm}), vrf[rt]};
-                dmem_array = new[dmem_array.size()+1](dmem_array);
+                bit exists = 1'b0;
+                foreach(dmem_array[j])
+                begin
+                    if(dmem_array[j].address == (vrf[rs] + {{14{imm[15]}}, imm}))
+                    begin
+                        dmem_array[j].data = vrf[rt];
+                        exists = 1'b1;
+                        break;
+                    end
+                end
+                
+                if(!exists)
+                begin
+                    dmem_array[dmem_array.size()-1] = '{(vrf[rs] + {{14{imm[15]}}, imm}), vrf[rt]};
+                    dmem_array = new[dmem_array.size()+1](dmem_array);
+                end
             end
 
             default:
