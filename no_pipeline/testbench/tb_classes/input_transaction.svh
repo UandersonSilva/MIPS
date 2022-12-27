@@ -112,9 +112,9 @@ class input_transaction;
             end
         endcase
 
-        s = $sformatf("instr_address_in: 0x%8h", instr_address_in, 
-        " instr_in: ", instr_format, " instrWrite_in: ", instrWrite_in,
-        " reset_in: %b", reset_in, " read_data_address_in: 0x%8h", read_data_address_in);
+        s = {$sformatf("instr_address_in: 0x%8h", instr_address_in), 
+        $sformatf(" instr_in: "), instr_format, $sformatf(" instrWrite_in: %b", instrWrite_in),
+        $sformatf(" reset_in: %b", reset_in), $sformatf(" read_data_address_in: 0x%8h", read_data_address_in)};
 
         return s;
     endfunction : convert2string

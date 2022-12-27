@@ -195,10 +195,10 @@ class data_item;
             end
         endcase
 
-        s = $sformatf("instr_address_in: 0x%8h", instr_address_in, 
-        " instr_in: %s", instr_format_in, " instrWrite_in: %b", instrWrite_in,
-        " reset_in: %b", reset_in, " read_data_address_in: 0x%8h", read_data_address_in, 
-        " :: read_instr_out: %s", instr_format_out, " read_data_out: 0x%8h", read_data_out);
+        s = {$sformatf("instr_address_in: 0x%8h", instr_address_in), 
+        $sformatf(" instr_in: "), instr_format_in, $sformatf(" instrWrite_in: %b", instrWrite_in),
+        $sformatf(" reset_in: %b", reset_in), $sformatf(" read_data_address_in: 0x%8h", read_data_address_in), 
+        $sformatf(" :: read_instr_out: "), instr_format_out, $sformatf(" read_data_out: 0x%8h", read_data_out)};
 
         return s;
     endfunction : convert2string

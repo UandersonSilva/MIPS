@@ -98,7 +98,7 @@ class output_transaction;
             end
         endcase
 
-        s = $sformatf("read_instr_out: ", instr_format, " read_data_out: 0x%8h", read_data_out);
+        s = {$sformatf("read_instr_out: "), instr_format, $sformatf(" read_data_out: 0x%8h", read_data_out)};
 
         return s;
     endfunction : convert2string
