@@ -263,7 +263,19 @@ class initial_test extends base_test;
         data_i = new();
         data_i.reset_in             = 1'b0;
         data_i.instr_in             = 32'b111111_00000000000000000000000000; //check
-        data_i.instr_address_in     = 32'h00000048;
+        data_i.instr_address_in     = 32'h00000000;
+        data_i.read_data_address_in = 32'h00000000;
+        data_i.instrWrite_in        = 1'b0;
+        super.insert_data();
+        
+        @(data_i.done);
+
+        super.obtain_data();
+
+        data_i = new();
+        data_i.reset_in             = 1'b0;
+        data_i.instr_in             = 32'b111111_00000000000000000000000000; //check
+        data_i.instr_address_in     = 32'h0000000c;
         data_i.read_data_address_in = 32'h00000004;
         data_i.instrWrite_in        = 1'b0;
         super.insert_data();
@@ -275,7 +287,7 @@ class initial_test extends base_test;
         data_i = new();
         data_i.reset_in             = 1'b0;
         data_i.instr_in             = 32'b111111_00000000000000000000000000; //check
-        data_i.instr_address_in     = 32'h00000048;
+        data_i.instr_address_in     = 32'h00000018;
         data_i.read_data_address_in = 32'h00000008;
         data_i.instrWrite_in        = 1'b0;
         super.insert_data();
@@ -287,7 +299,7 @@ class initial_test extends base_test;
         data_i = new();
         data_i.reset_in             = 1'b0;
         data_i.instr_in             = 32'b111111_00000000000000000000000000; //check
-        data_i.instr_address_in     = 32'h00000048;
+        data_i.instr_address_in     = 32'h00000004;
         data_i.read_data_address_in = 32'h0000000c;
         data_i.instrWrite_in        = 1'b0;
         super.insert_data();
@@ -299,7 +311,7 @@ class initial_test extends base_test;
         data_i = new();
         data_i.reset_in             = 1'b0;
         data_i.instr_in             = 32'b111111_00000000000000000000000000; //check
-        data_i.instr_address_in     = 32'h00000048;
+        data_i.instr_address_in     = 32'h00000020;
         data_i.read_data_address_in = 32'h00000010;
         data_i.instrWrite_in        = 1'b0;
         super.insert_data();
@@ -311,7 +323,7 @@ class initial_test extends base_test;
         data_i = new();
         data_i.reset_in             = 1'b0;
         data_i.instr_in             = 32'b111111_00000000000000000000000000; //check
-        data_i.instr_address_in     = 32'h00000048;
+        data_i.instr_address_in     = 32'h00000028;
         data_i.read_data_address_in = 32'h00000014;
         data_i.instrWrite_in        = 1'b0;
         super.insert_data();
@@ -323,7 +335,7 @@ class initial_test extends base_test;
         data_i = new();
         data_i.reset_in             = 1'b0;
         data_i.instr_in             = 32'b111111_00000000000000000000000000; //check
-        data_i.instr_address_in     = 32'h00000048;
+        data_i.instr_address_in     = 32'h00000030;
         data_i.read_data_address_in = 32'h00000018;
         data_i.instrWrite_in        = 1'b0;
         super.insert_data();
@@ -335,7 +347,7 @@ class initial_test extends base_test;
         data_i = new();
         data_i.reset_in             = 1'b0;
         data_i.instr_in             = 32'b111111_00000000000000000000000000; //check
-        data_i.instr_address_in     = 32'h00000048;
+        data_i.instr_address_in     = 32'h00000038;
         data_i.read_data_address_in = 32'h0000001c;
         data_i.instrWrite_in        = 1'b0;
         super.insert_data();
