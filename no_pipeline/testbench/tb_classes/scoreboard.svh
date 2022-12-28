@@ -2,11 +2,14 @@ class scoreboard;
     transaction_port #(input_transaction) scoreboard_tp_in;
     transaction_port #(output_transaction) scoreboard_tp_out;
 
-    logic [WIDTH - 1:0] vrf [4:0];
-    logic [WIDTH - 1:0] vpc = 32'b0;
+    logic [WIDTH - 1:0] vpc = 32'd0;
     
     logic [WIDTH - 1:0] imm, instruction, target;
     logic [4:0] rs, rt, rd;
+
+    typedef struct {
+        logic [WIDTH - 1:0] value;
+    } vrf;
 
     typedef struct {
         logic [WIDTH - 2:0] address;
@@ -18,6 +21,7 @@ class scoreboard;
         logic [WIDTH - 1:0] instruction;
     } vimem;
 
+    vrf vrf_array [];
     vdmem dmem_array [];
     vimem imem_array [];
 
@@ -30,13 +34,11 @@ class scoreboard;
     function new();
         dmem_array =  new[1];
         imem_array =  new[1];
+        vrf_array = new[32];
+        vrf_array[0].value = 32'd0;
     endfunction : new
 
     function void execute();
-        vrf [5'b0] = 32'b0;
-
-        //instruction = vimem[vpc[31:2]];
-
         foreach(imem_array[i])
         begin
             if(imem_array[i].address == vpc[31:2])
@@ -46,8 +48,6 @@ class scoreboard;
             end
         end
 
-        //$cast(opcode, instruction[31:26]);
-        //$cast(funct, instruction[5:0]);
         opcode = opcode_t'(instruction[31:26]);
         funct  = funct_t'(instruction[5:0]);
 
@@ -64,31 +64,31 @@ class scoreboard;
                 _add:
                 begin
                     if(rd != 5'd0)
-                        vrf[rd] = vrf[rs] + vrf[rt];
+                        vrf_array[rd].value = vrf_array[rs].value + vrf_array[rt].value;
                 end
 
                 _sub:
                 begin
                     if(rd != 5'd0)
-                        vrf[rd] = vrf[rs] - vrf[rt];
+                        vrf_array[rd].value = vrf_array[rs].value - vrf_array[rt].value;
                 end
                 
                 _AND:
                 begin
                     if(rd != 5'd0)
-                        vrf[rd] = vrf[rs] & vrf[rt];
+                        vrf_array[rd].value = vrf_array[rs].value & vrf_array[rt].value;
                 end
                 
                 _OR:
                 begin
                     if(rd != 5'd0)
-                        vrf[rd] = vrf[rs] | vrf[rt];
+                        vrf_array[rd].value = vrf_array[rs].value | vrf_array[rt].value;
                 end
                 
                 _slt:
                 begin
                     if(rd != 5'd0)
-                        vrf[rd] = (vrf[rs] < vrf[rt]) ? {{(WIDTH-1){1'b0}}, 1'b1} : {WIDTH{1'b0}};
+                        vrf_array[rd].value = (vrf_array[rs].value < vrf_array[rt].value) ? {{(WIDTH-1){1'b0}}, 1'b1} : {WIDTH{1'b0}};
                 end
                 
                 default:
@@ -104,13 +104,13 @@ class scoreboard;
 
             _beq:
             begin
-                target = ((vrf[rs] - vrf[rt]) == 32'b0) ? vpc + 32'd4 + imm : vpc + 32'd4;
+                target = ((vrf_array[rs].value - vrf_array[rt].value) == 32'b0) ? vpc + 32'd4 + {imm[29:0], 2'b00} : vpc + 32'd4;
             end
 
             _addiu:
             begin
                 if(rt != 5'd0)
-                    vrf[rt] = vrf[rs] + {{14{imm[15]}}, imm};
+                    vrf_array[rt].value = vrf_array[rs].value + imm;
             end
             
             _lw:
@@ -119,9 +119,9 @@ class scoreboard;
                 begin
                     foreach(dmem_array[j])
                     begin
-                        if(dmem_array[j].address == (vrf[rs] + {{14{imm[15]}}, imm}))
+                        if(dmem_array[j].address == (vrf_array[rs].value[31:2] + imm[31:2]))
                         begin
-                            vrf[rt] = dmem_array[j].data;
+                            vrf_array[rt].value = dmem_array[j].data;
                             break;
                         end
                     end
@@ -131,11 +131,11 @@ class scoreboard;
             _sw:
             begin
                 bit exists = 1'b0;
-                foreach(dmem_array[j])
+                foreach(dmem_array[k])
                 begin
-                    if(dmem_array[j].address == (vrf[rs] + {{14{imm[15]}}, imm}))
+                    if(dmem_array[k].address == (vrf_array[rs].value[31:2] + imm[31:2]))
                     begin
-                        dmem_array[j].data = vrf[rt];
+                        dmem_array[k].data = vrf_array[rt].value;
                         exists = 1'b1;
                         break;
                     end
@@ -143,7 +143,7 @@ class scoreboard;
                 
                 if(!exists)
                 begin
-                    dmem_array[dmem_array.size()-1] = '{(vrf[rs] + {{14{imm[15]}}, imm}), vrf[rt]};
+                    dmem_array[dmem_array.size()-1] = '{(vrf_array[rs].value[31:2] + imm[31:2]), vrf_array[rt].value};
                     dmem_array = new[dmem_array.size()+1](dmem_array);
                 end
             end
@@ -155,7 +155,6 @@ class scoreboard;
         endcase
 
         vpc = (opcode == _j || opcode == _beq) ? target : vpc + 32'd4;
-
         
     endfunction : execute
 
@@ -176,9 +175,24 @@ class scoreboard;
             begin
                 if(t_in.instrWrite_in)
                 begin
-                    imem_array[imem_array.size()-1] = '{t_in.instr_address_in[31:2], t_in.instr_in};
-                    imem_array = new[imem_array.size()+1](imem_array); 
-                    
+                    bit exists = 1'b0;
+
+                    foreach(imem_array[l])
+                    begin
+                        if(imem_array[l].address == t_in.instr_address_in[31:2])
+                        begin
+                            imem_array[l].instruction = t_in.instr_in;
+                            exists = 1'b1;
+                            break;
+                        end
+                    end
+
+                    if(!exists)
+                    begin
+                        imem_array[imem_array.size()-1] = '{t_in.instr_address_in[31:2], t_in.instr_in};
+                        imem_array = new[imem_array.size()+1](imem_array); 
+                    end
+
                     $display("%0t [SCOREBOARD]: Input:: ", $time, t_in.convert2string());
                 end
             end
@@ -196,13 +210,20 @@ class scoreboard;
                     begin
                         execute();
 
-                        predicted.copy(t_out);
-
-                        foreach(dmem_array[k])
+                        foreach(imem_array[m])
                         begin
-                            if(dmem_array[k].address == t_in.read_data_address_in[31:2])
+                            if(imem_array[m].address == t_in.instr_address_in[31:2])
                             begin
-                                predicted.read_data_out = dmem_array[k].data;
+                                predicted.read_instr_out = imem_array[m].instruction;
+                                break;
+                            end
+                        end
+
+                        foreach(dmem_array[n])
+                        begin
+                            if(dmem_array[n].address == t_in.read_data_address_in[31:2])
+                            begin
+                                predicted.read_data_out = dmem_array[n].data;
                                 break;
                             end
                         end
