@@ -41,8 +41,8 @@ interface mips_interface();
         instrWrite_in        = iinstrWrite;
         reset_in             = ireset;         
 
-        @(negedge clock);
-        #0.1
+        @(posedge clock);
+        #0.1;
         oread_instr = read_instr_out;
         oread_data  = read_data_out;
         
