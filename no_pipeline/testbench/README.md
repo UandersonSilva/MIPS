@@ -21,6 +21,6 @@ Here:
 
 In this testbench, the instructions are inserted on the falling clock egde. The input monitor reads the input values on the rising clock edge, when the input signals don't change, and the output monitor reads the outputs values on the falling clock edge, when the output signals don't change.  
 During the instruction writing (instrWrite_in = 1), all instructions are written in a data structure of the scoreboard. When instrWrite_in is equal to 0, the scoreboard executes the received instructions and determines the output values.  
-while instrWrite_in is equal to 0, the output checking will occur when the check code (opcode = 6'b111111) is detected.  
+While instrWrite_in is equal to 0, the output checking will occur when the check code (opcode = 6'b111111) is detected.  
 
 **OBS.:** *The testbench results can be seen in the testbench_output.txt file.*
