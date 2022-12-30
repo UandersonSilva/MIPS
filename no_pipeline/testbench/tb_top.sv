@@ -35,6 +35,13 @@ module tb_top;
                 t0 = selected;
             end
 
+            "COUNT_TEST":
+            begin
+                count_test selected;
+                selected = new();
+                t0 = selected;
+            end
+
             default:
             begin
                 initial_test selected;
@@ -50,7 +57,7 @@ module tb_top;
         $display("%c[0m", 27);
         
         t0.run();
-        #1;
+        #2;
         $finish;
     end
 endmodule : tb_top

@@ -34,5 +34,6 @@ package tb_pkg;
     
     `include "./tb_classes/tests/base_test.svh"
     `include "./tb_classes/tests/initial_test.svh"
+    `include "./tb_classes/tests/count_test.svh"
 
 endpackage : tb_pkg
