@@ -173,6 +173,9 @@ class scoreboard;
                 $display("%0t [SCOREBOARD]: No input transaction. Null pointer.", $time);
             else
             begin
+                if(t_in.reset_in)
+                    vpc = 32'd0;
+
                 if(t_in.instrWrite_in)
                 begin
                     bit exists = 1'b0;
