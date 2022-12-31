@@ -102,3 +102,50 @@
 # ** Note: $finish    : ../testbench/tb_top.sv(61)
 #    Time: 197 ns  Iteration: 0  Instance: /tb_top
 # End time: 12:53:31 on Dec 30,2022, Elapsed time: 0:01:10
+
+
+# [TB_TOP] Running FIBONACCI_TEST
+# 
+# 3 [SCOREBOARD]: Input:: instr_address_in: 0x00000000 instr_in: _addiu $0, $1, 0x0001 instrWrite_in: 1 reset_in: 1 read_data_address_in: 0x00000000
+# 5 [SCOREBOARD]: Input:: instr_address_in: 0x00000004 instr_in: _addiu $0, $30, 0x0080 instrWrite_in: 1 reset_in: 1 read_data_address_in: 0x00000000
+# 7 [SCOREBOARD]: Input:: instr_address_in: 0x00000008 instr_in: _addiu $0, $15, 0x0000 instrWrite_in: 1 reset_in: 1 read_data_address_in: 0x00000000
+# 9 [SCOREBOARD]: Input:: instr_address_in: 0x0000000c instr_in: _sw $0, $15, 0x000c instrWrite_in: 1 reset_in: 1 read_data_address_in: 0x00000000
+# 11 [SCOREBOARD]: Input:: instr_address_in: 0x00000010 instr_in: _addiu $0, $16, 0x0001 instrWrite_in: 1 reset_in: 1 read_data_address_in: 0x00000000
+# 13 [SCOREBOARD]: Input:: instr_address_in: 0x00000014 instr_in: _add $15, $16, $15 instrWrite_in: 1 reset_in: 1 read_data_address_in: 0x00000000
+# 15 [SCOREBOARD]: Input:: instr_address_in: 0x00000018 instr_in: _sw $0, $15, 0x000c instrWrite_in: 1 reset_in: 1 read_data_address_in: 0x00000000
+# 17 [SCOREBOARD]: Input:: instr_address_in: 0x0000001c instr_in: _slt $30, $15, $3 instrWrite_in: 1 reset_in: 1 read_data_address_in: 0x00000000
+# 19 [SCOREBOARD]: Input:: instr_address_in: 0x00000020 instr_in: _beq $1, $3, 0x0004 instrWrite_in: 1 reset_in: 1 read_data_address_in: 0x00000000
+# 21 [SCOREBOARD]: Input:: instr_address_in: 0x00000024 instr_in: _add $15, $16, $16 instrWrite_in: 1 reset_in: 1 read_data_address_in: 0x00000000
+# 23 [SCOREBOARD]: Input:: instr_address_in: 0x00000028 instr_in: _sw $0, $16, 0x000c instrWrite_in: 1 reset_in: 1 read_data_address_in: 0x00000000
+# 25 [SCOREBOARD]: Input:: instr_address_in: 0x0000002c instr_in: _slt $16, $30, $3 instrWrite_in: 1 reset_in: 1 read_data_address_in: 0x00000000
+# 27 [SCOREBOARD]: Input:: instr_address_in: 0x00000030 instr_in: _beq $1, $3, 0xfff8 instrWrite_in: 1 reset_in: 1 read_data_address_in: 0x00000000
+# 29 [SCOREBOARD]: Input:: instr_address_in: 0x00000034 instr_in: _j 0x0000000 instrWrite_in: 1 reset_in: 1 read_data_address_in: 0x0000000c
+# 42 [SCOREBOARD]: Input:: instr_address_in: 0x00000008 instr_in: checking instrWrite_in: 0 reset_in: 0 read_data_address_in: 0x0000000c
+# 42 [SCOREBOARD]: PASS:: read_instr_out: _addiu $0, $15, 0x0000 read_data_out: 0x00000000 || Predicted => read_instr_out: _addiu $0, $15, 0x0000 read_data_out: 0x00000000       
+# 44 [SCOREBOARD]: Input:: instr_address_in: 0x00000024 instr_in: checking instrWrite_in: 0 reset_in: 0 read_data_address_in: 0x0000000c
+# 44 [SCOREBOARD]: FAIL:: read_instr_out: _add $15, $16, $16 read_data_out: 0x00000000 || Predicted => read_instr_out: _add $15, $16, $16 read_data_out: 0x00000001
+# 48 [SCOREBOARD]: Input:: instr_address_in: 0x00000014 instr_in: checking instrWrite_in: 0 reset_in: 0 read_data_address_in: 0x0000000c
+# 48 [SCOREBOARD]: PASS:: read_instr_out: _add $15, $16, $15 read_data_out: 0x00000001 || Predicted => read_instr_out: _add $15, $16, $15 read_data_out: 0x00000001
+# 56 [SCOREBOARD]: Input:: instr_address_in: 0x00000024 instr_in: checking instrWrite_in: 0 reset_in: 0 read_data_address_in: 0x0000000c
+# 56 [SCOREBOARD]: PASS:: read_instr_out: _add $15, $16, $16 read_data_out: 0x00000002 || Predicted => read_instr_out: _add $15, $16, $16 read_data_out: 0x00000002
+# 64 [SCOREBOARD]: Input:: instr_address_in: 0x00000014 instr_in: checking instrWrite_in: 0 reset_in: 0 read_data_address_in: 0x0000000c
+# 64 [SCOREBOARD]: PASS:: read_instr_out: _add $15, $16, $15 read_data_out: 0x00000003 || Predicted => read_instr_out: _add $15, $16, $15 read_data_out: 0x00000003
+# 72 [SCOREBOARD]: Input:: instr_address_in: 0x00000024 instr_in: checking instrWrite_in: 0 reset_in: 0 read_data_address_in: 0x0000000c
+# 72 [SCOREBOARD]: PASS:: read_instr_out: _add $15, $16, $16 read_data_out: 0x00000005 || Predicted => read_instr_out: _add $15, $16, $16 read_data_out: 0x00000005
+# 80 [SCOREBOARD]: Input:: instr_address_in: 0x00000014 instr_in: checking instrWrite_in: 0 reset_in: 0 read_data_address_in: 0x0000000c
+# 80 [SCOREBOARD]: PASS:: read_instr_out: _add $15, $16, $15 read_data_out: 0x00000008 || Predicted => read_instr_out: _add $15, $16, $15 read_data_out: 0x00000008
+# 88 [SCOREBOARD]: Input:: instr_address_in: 0x00000024 instr_in: checking instrWrite_in: 0 reset_in: 0 read_data_address_in: 0x0000000c
+# 88 [SCOREBOARD]: PASS:: read_instr_out: _add $15, $16, $16 read_data_out: 0x0000000d || Predicted => read_instr_out: _add $15, $16, $16 read_data_out: 0x0000000d
+# 96 [SCOREBOARD]: Input:: instr_address_in: 0x00000014 instr_in: checking instrWrite_in: 0 reset_in: 0 read_data_address_in: 0x0000000c
+# 96 [SCOREBOARD]: PASS:: read_instr_out: _add $15, $16, $15 read_data_out: 0x00000015 || Predicted => read_instr_out: _add $15, $16, $15 read_data_out: 0x00000015
+# 104 [SCOREBOARD]: Input:: instr_address_in: 0x00000024 instr_in: checking instrWrite_in: 0 reset_in: 0 read_data_address_in: 0x0000000c
+# 104 [SCOREBOARD]: PASS:: read_instr_out: _add $15, $16, $16 read_data_out: 0x00000022 || Predicted => read_instr_out: _add $15, $16, $16 read_data_out: 0x00000022
+# 112 [SCOREBOARD]: Input:: instr_address_in: 0x00000014 instr_in: checking instrWrite_in: 0 reset_in: 0 read_data_address_in: 0x0000000c
+# 112 [SCOREBOARD]: PASS:: read_instr_out: _add $15, $16, $15 read_data_out: 0x00000037 || Predicted => read_instr_out: _add $15, $16, $15 read_data_out: 0x00000037
+# 120 [SCOREBOARD]: Input:: instr_address_in: 0x00000024 instr_in: checking instrWrite_in: 0 reset_in: 0 read_data_address_in: 0x0000000c
+# 120 [SCOREBOARD]: PASS:: read_instr_out: _add $15, $16, $16 read_data_out: 0x00000059 || Predicted => read_instr_out: _add $15, $16, $16 read_data_out: 0x00000059
+# 128 [SCOREBOARD]: Input:: instr_address_in: 0x00000014 instr_in: checking instrWrite_in: 0 reset_in: 0 read_data_address_in: 0x0000000c
+# 128 [SCOREBOARD]: PASS:: read_instr_out: _add $15, $16, $15 read_data_out: 0x00000090 || Predicted => read_instr_out: _add $15, $16, $15 read_data_out: 0x00000090
+# ** Note: $finish    : ../testbench/tb_top.sv(68)
+#    Time: 129 ns  Iteration: 0  Instance: /tb_top
+# End time: 12:34:39 on Dec 31,2022, Elapsed time: 0:01:13
