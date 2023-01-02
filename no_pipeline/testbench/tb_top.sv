@@ -49,6 +49,13 @@ module tb_top;
                 t0 = selected;
             end
 
+            "MULTIPLICATION_TEST":
+            begin
+                multiplication_test selected;
+                selected = new();
+                t0 = selected;
+            end
+
             default:
             begin
                 initial_test selected;
