@@ -10,7 +10,7 @@ Here:
  - **mips_np** is the device under test (DUT);
  - **interface** connects the DUT to the testbench environment (**env**);
  - **driver** sends stimulus provided by the **test** to the **interface** to be inserted in the **mips_np** and obtains its output signals;
- - **test** contains the stimulus to be verified. It can use the output signals from the **mips_np** to change the stimulus sequence;
+ - **test** contains the stimulus to be verified. It can use the output signals from the **mips_np** to change the stimulus sequence/values;
  - **input_monitor** and **output_monitor** read the input and the output signals respectively and send that values to the **scoreboard**;
  - **scoreboard** receives the input signals, defines the expected output signals, compares them to the **mips_np** output signals and shows if that values are correct or not.
 
