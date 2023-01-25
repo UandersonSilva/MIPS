@@ -48,4 +48,11 @@ jump_address <= {PC_plus_4[31:28], address, 2'b00}
 
 ## Structure
 
-![MIPS np structure](alib/MIPS_structure.svg)
+![MIPS np structure](alib/MIPS_structure.svg)  
+
+The following actions are performed at each stage:
+ - Instruction Fetch (**IF**): The instruction pointed to by the PC value is read from instruction memory and the PC is updated;  
+ - Instruction Decode (**ID**); The instruction is decoded, the control signals for its execution are generated and the requested data is read from the register file. Furthermore, if it is the **beq** or **j** instruction, its execution is done at this stage as well;  
+ - Execution or address calculation (**EX**): According to the values generated in the **ID** stage, the instruction is executed or the data memory address is obtained;
+ - Data Memory access (**MEM**): If it is a memory access instruction (**lw** or **sw**), the data memory is accessed for reading or writing;
+ - Write Back (**WB**): The execution result is stored in the register file according to the instruction.
