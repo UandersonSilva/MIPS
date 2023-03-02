@@ -20,7 +20,7 @@ condition | result
 (id_branch == 1'b1) && (ex_regWrite == 1'b1) && (ex_rd != 5'd0) && (id_rs == ex_rd) | ix_muxA <= 2'b01
 (id_branch == 1'b1) && (mem_regWrite == 1'b1) && (mem_rd != 5'd0) && (id_rs == mem_rd) | id_muxA <= 2'b10
 (id_branch == 1'b1) && (wb_regWrite == 1'b1) && (wb_rd != 5'd0) && (id_rs == wb_rd) | id_muxA <= 2'b11
-ohters                                                          | id_muxA <= 2'b00
+others                                                          | id_muxA <= 2'b00
 
 **id_muxB**
 condition | result
@@ -28,7 +28,7 @@ condition | result
 (id_branch == 1'b1) && (ex_regWrite == 1'b1) && (ex_rd != 5'd0) && (id_rt == ex_rd) | ix_muxB <= 2'b01
 (id_branch == 1'b1) && (mem_regWrite == 1'b1) && (mem_rd != 5'd0) && (id_rt == mem_rd) | id_muxB <= 2'b10
 (id_branch == 1'b1) && (wb_regWrite == 1'b1) && (wb_rd != 5'd0) && (id_rt == wb_rd) | id_muxB <= 2'b11
-ohters                                                          | id_muxB <= 2'b00
+others                                                          | id_muxB <= 2'b00
 
 
 **ex_muxA**
@@ -36,11 +36,11 @@ condition | result
 ----------|--------
 (mem_regWrite == 1'b1) && (mem_rd != 5'd0) && (ex_rs == mem_rd) | ex_muxA <= 2'b01
 (wb_regWrite == 1'b1) && (wb_rd != 5'd0) && (ex_rs == wb_rd)    | ex_muxA <= 2'b10
-ohters                                                          | ex_muxA <= 2'b00
+others                                                          | ex_muxA <= 2'b00
 
 **ex_muxB**
 condition | result
 ----------|--------
 (mem_regWrite == 1'b1) && (mem_rd != 5'd0) && (ex_rt == mem_rd) | ex_muxB <= 2'b01
 (wb_regWrite == 1'b1) && (wb_rd != 5'd0) && (ex_rt == wb_rd)    | ex_muxB <= 2'b10
-ohters                                                          | ex_muxB <= 2'b00
+others                                                          | ex_muxB <= 2'b00
