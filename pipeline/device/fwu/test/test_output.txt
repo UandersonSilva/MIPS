@@ -1,0 +1,74 @@
+##Values##
+# [1] id_rs: 0 id_rt: 0
+# [1] ex_rs: 0 ex_rt: 0 ex_rd: 0
+# [1] mem_rd: 0 wb_rd: 0
+# [1] ex_regWrite: 0 mem_regWrite: 0 wb_regWrite: 0
+# [1] id_branch: 0
+# [1] ex_muxA: 0 ex_muxB: 0
+# [1] id_muxA: 0 id_muxB: 0
+##Values##
+# [2] id_rs: 0 id_rt: 0
+# [2] ex_rs: 5 ex_rt: 0 ex_rd: 0
+# [2] mem_rd: 5 wb_rd: 0
+# [2] ex_regWrite: 0 mem_regWrite: 0 wb_regWrite: 0
+# [2] id_branch: 0
+# [2] ex_muxA: 0 ex_muxB: 0
+# [2] id_muxA: 0 id_muxB: 0
+##Values##
+# [3] id_rs: 0 id_rt: 0
+# [3] ex_rs: 5 ex_rt: 4 ex_rd: 0
+# [3] mem_rd: 5 wb_rd: 4
+# [3] ex_regWrite: 0 mem_regWrite: 1 wb_regWrite: 1
+# [3] id_branch: 0
+# [3] ex_muxA: 1 ex_muxB: 2
+# [3] id_muxA: 0 id_muxB: 0
+##Values##
+# [4] id_rs: 0 id_rt: 0
+# [4] ex_rs: 7 ex_rt: 3 ex_rd: 0
+# [4] mem_rd: 3 wb_rd: 7
+# [4] ex_regWrite: 0 mem_regWrite: 1 wb_regWrite: 1
+# [4] id_branch: 0
+# [4] ex_muxA: 2 ex_muxB: 1
+# [4] id_muxA: 0 id_muxB: 0
+##Values##
+# [5] id_rs: 8 id_rt: 2
+# [5] ex_rs: 5 ex_rt: 0 ex_rd: 2
+# [5] mem_rd: 8 wb_rd: 0
+# [5] ex_regWrite: 1 mem_regWrite: 1 wb_regWrite: 0
+# [5] id_branch: 1
+# [5] ex_muxA: 0 ex_muxB: 0
+# [5] id_muxA: 2 id_muxB: 1
+##Values##
+# [6] id_rs: 2 id_rt: 9
+# [6] ex_rs: 1 ex_rt: 0 ex_rd: 2
+# [6] mem_rd: 8 wb_rd: 9
+# [6] ex_regWrite: 1 mem_regWrite: 1 wb_regWrite: 1
+# [6] id_branch: 1
+# [6] ex_muxA: 0 ex_muxB: 0
+# [6] id_muxA: 1 id_muxB: 3
+##Values##
+# [7] id_rs: 8 id_rt: 6
+# [7] ex_rs: 5 ex_rt: 0 ex_rd: 6
+# [7] mem_rd: 6 wb_rd: 6
+# [7] ex_regWrite: 1 mem_regWrite: 1 wb_regWrite: 1
+# [7] id_branch: 1
+# [7] ex_muxA: 0 ex_muxB: 0
+# [7] id_muxA: 0 id_muxB: 1
+##Values##
+# [8] id_rs: 3 id_rt: 6
+# [8] ex_rs: 5 ex_rt: 0 ex_rd: 3
+# [8] mem_rd: 6 wb_rd: 3
+# [8] ex_regWrite: 1 mem_regWrite: 1 wb_regWrite: 1
+# [8] id_branch: 1
+# [8] ex_muxA: 0 ex_muxB: 0
+# [8] id_muxA: 1 id_muxB: 2
+##Values##
+# [9] id_rs: 3 id_rt: 6
+# [9] ex_rs: 3 ex_rt: 9 ex_rd: 6
+# [9] mem_rd: 5 wb_rd: 3
+# [9] ex_regWrite: 1 mem_regWrite: 1 wb_regWrite: 1
+# [9] id_branch: 1
+# [9] ex_muxA: 2 ex_muxB: 0
+# [9] id_muxA: 3 id_muxB: 1
+#
+# End time: 09:26:59 on Mar 03,2023, Elapsed time: 0:03:03

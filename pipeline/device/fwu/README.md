@@ -44,3 +44,5 @@ condition | result
 (mem_regWrite == 1'b1) && (mem_rd != 5'd0) && (ex_rt == mem_rd) | ex_muxB <= 2'b01
 (wb_regWrite == 1'b1) && (wb_rd != 5'd0) && (ex_rt == wb_rd)    | ex_muxB <= 2'b10
 others                                                          | ex_muxB <= 2'b00
+
+**OBS.:** *The test results can be seen in test/test_output.txt*
