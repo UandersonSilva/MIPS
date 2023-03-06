@@ -1,0 +1,24 @@
+##Values##
+# [1] id_ex_memRead: 0 id_ex_rt: 0
+# [1] instruction2msb_in: 0_0_0
+# [1] pc_wr_out: 1 if_id_wr_out: 1 flush_control_out: 0
+##Values##
+# [2] id_ex_memRead: 0 id_ex_rt: 0
+# [2] instruction2msb_in: 4_0_0
+# [2] pc_wr_out: 1 if_id_wr_out: 1 flush_control_out: 0
+##Values##
+# [3] id_ex_memRead: 0 id_ex_rt: 8
+# [3] instruction2msb_in: 4_8_16
+# [3] pc_wr_out: 1 if_id_wr_out: 1 flush_control_out: 0
+##Values##
+# [4] id_ex_memRead: 1 id_ex_rt: 8
+# [4] instruction2msb_in: 4_8_16
+# [4] pc_wr_out: 0 if_id_wr_out: 0 flush_control_out: 1
+##Values##
+# [5] id_ex_memRead: 1 id_ex_rt: 16
+# [5] instruction2msb_in: 4_8_16
+# [5] pc_wr_out: 0 if_id_wr_out: 0 flush_control_out: 1
+##Values##
+# [6] id_ex_memRead: 1 id_ex_rt: 30
+# [6] instruction2msb_in: 4_8_16
+# [6] pc_wr_out: 1 if_id_wr_out: 1 flush_control_out: 0

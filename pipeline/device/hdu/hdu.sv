@@ -1,6 +1,6 @@
 module hdu(
     input logic id_ex_memRead,
-    input logic [4:0] id_ex_rd,
+    input logic [4:0] id_ex_rt,
     input logic [15:0] instruction2msb_in,
     output logic pc_wr_out, if_id_wr_out, flush_control_out    
 );
@@ -15,9 +15,9 @@ module hdu(
 
     always_comb
     begin
-        if((opcode == 5'd4) && (id_ex_memRead))
+        if((opcode == 6'd4) && (id_ex_memRead))
         begin
-            if((id_ex_rd != 5'd0) && ((rs == id_ex_rd) || (rt == id_ex_rd)))
+            if((id_ex_rt != 5'd0) && ((rs == id_ex_rt) || (rt == id_ex_rt)))
             begin
                 pc_wr_out         <= 1'b0;
                 if_id_wr_out      <= 1'b0;
