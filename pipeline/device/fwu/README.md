@@ -6,7 +6,7 @@ This component deals with some data hazards that can occur between pipeline stag
 
 ![fwu example](../../alib/fwu_example.svg) 
 
-Here, the value of the register **$5** is required in various instructions. When the execution stage of the first instruction (addiu $0, **$5**, 3), there are two values for **$5**: The value stored in the register file (87) and the updated one generated in the execution stage (**upd_$5** = 3).  
+Here, the value of the register **$5** is required in various instructions. In the execution stage of the first instruction (addiu $0, **$5**, 3), there are two values for **$5**: The value stored in the register file (87) and the updated one generated in the execution stage (**upd_$5** = 3).  
 When the following instruction (or $4, **$5**, $7) reaches to the execution stage, the value that must be used is the updated one. So, the **upd_$5** has to be forwarded to current execution stage as rt value.  
 Something similar happens in the next execution. Now, the instruction and $3, **$5**, $10 requires the value of **$5**. Again, the **upd_$5** has to be forwarded to current execution stage as rt value.  
 After the write back conclusion of the first instruction (addiu $0, **$5**, 3), it is not necessary to forward the **upd_$5** because this value has already been written in the register file.   
